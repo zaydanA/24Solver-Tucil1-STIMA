@@ -661,18 +661,17 @@ int main()
 	vector<float> inputK;
 	float a,b,c,d;
 	float count;
-	count=0;
 	float p,q,r,s;
 	int i,j,k;
 	bool cek1=false;
 	bool cek2=false;
 	bool cek3=false;
 	bool cek4=false;
-	bool cekrepeat=false;
-	string choice;
 	bool isValid=false; 
+	string choice;
 	string save;
 	time_t start, end;
+	count=0;
 	
 	splashScreen();
 	while (!isValid){
