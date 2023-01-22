@@ -5,12 +5,12 @@
 #include <set>
 #include <fstream>
 #include <time.h> 
-
+#include <windows.h>
 
 using namespace std;
 set<string> result;
 
-bool validateInput(string x){
+bool validateInput(string x){//validasi input 4 kartu user
 
 	if (x.compare("A") == 0){
 		return true;
@@ -55,7 +55,7 @@ bool validateInput(string x){
 	return false;
 }
 
-float remitofloat(string x){
+float remitofloat(string x){//Mengubah string remi ke angka float
 	if (x.compare("A") == 0){
 		return 1;
 	}
@@ -99,7 +99,7 @@ float remitofloat(string x){
 	return 0;
 }
 
-string floattoremi(float x)
+string floattoremi(float x)//Merubah angka flaot ke string remi
 {
 	if (x == 1){
 		return "A";
@@ -144,7 +144,7 @@ string floattoremi(float x)
 	return " ";
 }
 
-string floattoString(float x)
+string floattoString(float x) //Merubah angka ke tipe string angka float
 {
 	if (x == 1){
 		return "1";
@@ -189,7 +189,7 @@ string floattoString(float x)
 	return " ";
 }
 
-vector<float>  randomNumber()
+vector<float>  randomNumber()//Menghasilkan 4 random number
 {
 	vector<float> inputR;
     int lb = 1, ub = 13;
@@ -203,21 +203,7 @@ vector<float>  randomNumber()
 	return inputR;
 }
 
-bool isRepeat(string a1,string b1,string c1,string d1){
-	if (a1.compare(b1) == 0 || a1.compare(c1) == 0 || a1.compare(d1) == 0 || b1.compare(c1) == 0 || b1.compare(d1) == 0 || c1.compare(d1) == 0){
-		return false;
-	}
-	return true;
-}
-bool isRepeatFloat(float a1,float b1,float c1,float d1){
-	if (a1==b1 || a1==c1 || a1==d1 || b1==c1 || b1==d1 || c1==d1){
-		return false;
-	}
-	return true;
-}
-
-void swapFloat(int x, float *a, float *b, float *c, float *d, float p, float q, float r, float s)
-// merubah posisi a b c d
+void swapFloat(int x, float *a, float *b, float *c, float *d, float p, float q, float r, float s) //Permutation merubah posisi a b c d
 {
 
 	// Algoritma
@@ -427,10 +413,9 @@ float calculate(char op1,float num1,float num2){
 	
 }
 
-void way1(float a,float b,float c,float d,char op1[4]) {
+void way1(float a,float b,float c,float d,char op1[4]) { // Menghitung (num1 op1 num2) op2 (num3 op3 num4)
     	float temp1, temp2, temp3;
 		int i;
-		char *tempStr;
 		string Str1,Str2,Str3,Str4,Str5,Str6,Str7;
 		float p,q,r,s;
 		p=a;
@@ -442,8 +427,6 @@ void way1(float a,float b,float c,float d,char op1[4]) {
             for (int i=0;i<4;i++) {
                 for (int j=0;j<4;j++) {
                     for (int k=0;k<4;k++) {
-                        
-                        // Way1 --> (nums[0] opI nums[1]) opJ (num[2] opK nums[3])
                         
                         temp1 = calculate(op1[i],a,b);
                         temp2 = calculate(op1[k],c,d);
@@ -470,10 +453,9 @@ void way1(float a,float b,float c,float d,char op1[4]) {
 
     }
 
-void way2(float a,float b,float c,float d,char op1[4]) {
+void way2(float a,float b,float c,float d,char op1[4]) { //Menghitung ((num1 op1 num2) op2 num3) op3 num4
     	float temp1, temp2, temp3;
 		int i;
-		char *tempStr;
 		string Str1,Str2,Str3,Str4,Str5,Str6,Str7;
 		float p,q,r,s;
 		p=a;
@@ -485,9 +467,6 @@ void way2(float a,float b,float c,float d,char op1[4]) {
             for (int i=0;i<4;i++) {
                 for (int j=0;j<4;j++) {
                     for (int k=0;k<4;k++) {
-                        
-                        // Way2 --> ((nums[0] opI nums[1]) opJ num[2]) opK nums[3]
-                        
                         temp1 = calculate(op1[i],a,b);
                         temp2 = calculate(op1[j],temp1,c);
                         temp3 = calculate(op1[k],temp2,d);
@@ -500,22 +479,16 @@ void way2(float a,float b,float c,float d,char op1[4]) {
 							Str5=floattoString(c);
 							Str6=op1[k];
 							Str7=floattoString(d);
-							result.insert("((" + Str1 + Str2 + Str3 +")" +Str4  + Str5 + ")" +  Str6 + Str7 + ")");
-							
-						}
-                            
+							result.insert("((" + Str1 + Str2 + Str3 +")" +Str4  + Str5 + ")" +  Str6 + Str7 + ")");							
+						}                   
                     }
-                }
-				
-            }
-			
+                }	
+            }			
         }
-
     }
-void way3(float a,float b,float c,float d,char op1[4]) {
+void way3(float a,float b,float c,float d,char op1[4]) { //Menghitung (num1 op1 (num2 op2 num3)) op3 num4
     	float temp1, temp2, temp3;
 		int i;
-		char *tempStr;
 		string Str1,Str2,Str3,Str4,Str5,Str6,Str7;
 		float p,q,r,s;
 		p=a;
@@ -526,10 +499,7 @@ void way3(float a,float b,float c,float d,char op1[4]) {
 			swapFloat(i,&a,&b,&c,&d,p,q,r,s);
             for (int i=0;i<4;i++) {
                 for (int j=0;j<4;j++) {
-                    for (int k=0;k<4;k++) {
-                        
-                        // Way2 --> (nums[0] opI (nums[1] opJ num[2])) opK nums[3]
-                        
+                    for (int k=0;k<4;k++) {                    
                         temp1 = calculate(op1[j],b,c);
                         temp2 = calculate(op1[i],a,temp1);
                         temp3 = calculate(op1[k],temp2,d);
@@ -555,10 +525,9 @@ void way3(float a,float b,float c,float d,char op1[4]) {
 
     }
 
-void way4(float a,float b,float c,float d,char op1[4]) {
+void way4(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (num2 op2 num3) op3 num4
     	float temp1, temp2, temp3;
 		int i;
-		char *tempStr;
 		string Str1,Str2,Str3,Str4,Str5,Str6,Str7;
 		float p,q,r,s;
 		p=a;
@@ -598,10 +567,9 @@ void way4(float a,float b,float c,float d,char op1[4]) {
 
     }
 
-void way5(float a,float b,float c,float d,char op1[4]) {
+void way5(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (num2 op2 (num3 op3 num4))
     	float temp1, temp2, temp3;
 		int i;
-		char *tempStr;
 		string Str1,Str2,Str3,Str4,Str5,Str6,Str7;
 		float p,q,r,s;
 		p=a;
@@ -641,44 +609,77 @@ void way5(float a,float b,float c,float d,char op1[4]) {
 
     }
 
-void splashScreen(){
-	cout << "            _____\n";
-	cout << "           |A .  | _____\n";
-	cout << "           | /.\\ ||A ^  | _____\n";
-	cout << "           |(_._)|| / \\ ||A _  | _____\n";
-	cout << "           |  |  || \\ / || ( ) ||A_ _ |\n";
-	cout << "           |____V||  .  ||(_'_)||( v )|\n";
-	cout << "                  |____V||  |  || \\ / |\n";
-	cout << "                         |____V||  .  |\n";
-	cout << "                                |____V|\n\n\n";
+void splashScreen(){//splashscreen
+	cout << " .----------------.  .----------------.   .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------. \n";
+	cout << "| .--------------. || .--------------. | | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n";
+	cout << "| |    _____     | || |   _    _     | | | |    _______   | || |     ____     | || |   _____      | || | ____   ____  | || |  _________   | || |  _______     | |\n";
+	cout << "| |   / ___ `.   | || |  | |  | |    | | | |   /  ___  |  | || |   .'    `.   | || |  |_   _|     | || ||_  _| |_  _| | || | |_   ___  |  | || | |_   __ \\    | |\n";
+	cout << "| |  |_/___) |   | || |  | |__| |_   | | | |  |  (__ \\_|  | || |  /  .--.  \\  | || |    | |       | || |  \\ \\   / /   | || |   | |_  \\_|  | || |   | |__) |   | |\n";
+	cout << "| |   .'____.'   | || |  |____   _|  | | | |   '.___`-.   | || |  | |    | |  | || |    | |   _   | || |   \\ \\ / /    | || |   |  _|  _   | || |   |  __ /    | |\n";
+	cout << "| |  / /____     | || |      _| |_   | | | |  |`\\____) |  | || |  \\  `--'  /  | || |   _| |__/ |  | || |    \\ ' /     | || |  _| |___/ |  | || |  _| |  \\ \\_  | |\n";
+	cout << "| |  |_______|   | || |     |_____|  | | | |  |_______.'  | || |   `.____.'   | || |  |________|  | || |     \\_/      | || | |_________|  | || | |____| |___| | |\n";
+	cout << "| |              | || |              | | | |              | || |              | || |              | || |              | || |              | || |              | |\n";
+	cout << "| '--------------' || '--------------' | | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n";
+	cout << " '----------------'  '----------------'   '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' \n";
+	
+}
 
+void startProg(){//start/exit program
+	bool temp=false;
+	string choicetemp;
+	while (!temp){
+
+		cout << "=======================================================================[START/EXIT]========================================================================= \n";
+		cout << "[1].Start\n";
+		cout << "[2].Exit\n";
+		cout << "Input : " ;cin >> choicetemp;
+		if (choicetemp.compare("1") == 0 || choicetemp.compare("2") == 0){
+			break;
+		}
+		
+		if (!temp)
+		{
+			printf("\n =========================================== invalid input ===========================================");
+			printf("\n -------------------------------------- press enter to continue -------------------------------------\n ");
+			cin.get();
+			cin.get();
+			system("cls");
+		}	
+		
+	}
+	if (choicetemp.compare("1") == 0){
+			" ";
+	}
+	else if (choicetemp.compare("2") == 0){
+			exit(0);
+	}
 }
 
 int main()
 {
-	char op1[4]={'+','-','*','/'};
-	string a1,b1,c1,d1;
 	vector<float> inputK;
+	char op1[4]={'+','-','*','/'};
 	float a,b,c,d;
 	float count;
-	float p,q,r,s;
-	int i,j,k;
 	bool cek1=false;
 	bool cek2=false;
 	bool cek3=false;
 	bool cek4=false;
 	bool isValid=false; 
+	time_t start, end;
+	int i,j,k;
+	string a1,b1,c1,d1;
 	string choice;
 	string save;
-	time_t start, end;
 	count=0;
 	
 	splashScreen();
+	startProg();
 	while (!isValid){
-		
-		cout << "=============================================Pilih Cara Input================================================= \n";
-		cout << "1.Random\n";
-		cout << "2.Keyboard\n";
+
+		cout << "=======================================================================Pilih Cara Input========================================================================= \n";
+		cout << "[1].Random\n";
+		cout << "[2].Input User\n";
 		cout << "Input : " ;cin >> choice;
 		if (choice.compare("1") == 0 || choice.compare("2") == 0){
 			break;
@@ -724,37 +725,21 @@ int main()
 		b=remitofloat(b1);
 		c=remitofloat(c1);
 		d=remitofloat(d1);
-
-
 	}else {
 
 			inputK=randomNumber();
-			// for (auto num:inputK) cout << num << " ";
-			
-			// cout << endl;
-
 			a=inputK[0];
 			b=inputK[1];
 			c=inputK[2];
 			d=inputK[3];
-
-			
-			
-
 			a1=floattoremi(a);
 			b1=floattoremi(b);
 			c1=floattoremi(c);
 			d1=floattoremi(d);
-		
-
 	}
 	
-
-
     start = clock();
   
-    
-	
 	way1(a,b,c,d,op1);
 	way2(a,b,c,d,op1);
 	way3(a,b,c,d,op1);
@@ -763,24 +748,30 @@ int main()
 
 	cout << a1 << " " << b1 << " " << c1 << " " << d1 << endl;
 
-
 	for (auto j = result.begin(); j != result.end(); ++j){
-        count++;}
-	cout << count << " Solutions\n";
+        count++;
+	}
 	
+	if (count>0){
+		cout << count << " Solutions found\n";
+	}else{
+		cout << "Tidak ada solusi\n";
+	}
+
+	count=0;
+	for (auto j = result.begin(); j != result.end(); ++j){
+        count++;
+		cout << count << ". " << *j << "\n";
+	}
+
     end = clock();
+
     double duration_sec = double(end-start)/CLOCKS_PER_SEC*1000;
 
 	cout << "Excecution Time : " << duration_sec << " ms\n";
 
-
-
-    // cout << "Time taken by program is : " << fixed
-    //      << time_taken << setprecision(10);
-    // cout << " sec " << endl;
-
 	while (!isValid){
-		cout << "Save? (Y/N) : ";
+		cout << "Apakah ingin menyimpan solusi ? (Y/N) : ";
 		cin >>  save;
 		if (save.compare("Y") == 0 || save.compare("N") == 0){
 			break;
