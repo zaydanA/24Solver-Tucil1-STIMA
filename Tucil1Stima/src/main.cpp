@@ -8,7 +8,7 @@
 #include <windows.h>
 
 using namespace std;
-set<string> result;
+set<string> result; //set untuk menghilangkan data yang terduplikasi
 
 bool validateInput(string x){//validasi input 4 kartu user
 
@@ -99,7 +99,7 @@ float remitofloat(string x){//Mengubah string remi ke angka float
 	return 0;
 }
 
-string floattoremi(float x)//Merubah angka flaot ke string remi
+string floattoremi(float x)//Merubah angka float ke string remi
 {
 	if (x == 1){
 		return "A";
@@ -144,7 +144,7 @@ string floattoremi(float x)//Merubah angka flaot ke string remi
 	return " ";
 }
 
-string floattoString(float x) //Merubah angka ke tipe string angka float
+string floattoString(float x) //Merubah angka float ke tipe string angka
 {
 	if (x == 1){
 		return "1";
@@ -203,7 +203,8 @@ vector<float>  randomNumber()//Menghasilkan 4 random number
 	return inputR;
 }
 
-void swapFloat(int x, float *a, float *b, float *c, float *d, float p, float q, float r, float s) //Permutation merubah posisi a b c d
+void swapFloat(int x, float *a, float *b, float *c, float *d, float p, float q, float r, float s) 
+//Permutasi merubah posisi a b c d
 {
 
 	// Algoritma
@@ -397,7 +398,7 @@ void swapFloat(int x, float *a, float *b, float *c, float *d, float p, float q, 
 	}
 }
 
-float calculate(char op1,float num1,float num2){
+float calculate(char op1,float num1,float num2){ //melakukan penghitungan
 	switch (op1) {
         case '+':
             return num1+num2;
@@ -539,13 +540,9 @@ void way4(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (n
             for (int i=0;i<4;i++) {
                 for (int j=0;j<4;j++) {
                     for (int k=0;k<4;k++) {
-                        
-                        // Way2 --> nums[0] opI (nums[1] opJ num[2]) opK nums[3])
-                        
                         temp1 = calculate(op1[j],b,c);
                         temp2 = calculate(op1[k],temp1,d);
                         temp3 = calculate(op1[i],a,temp2);
-                        //cout<<"way1 --"<<ops[i]<<" "<<ops[j]<<" "<<ops[k]<<" "<<temp1<<" "<<temp2<<" "<<temp3<<"\n";
                         if (24-temp3 <= 0.000001 && 24-temp3 >= -0.000001){
 							Str1=floattoString(a);
 							Str2=op1[i];
@@ -554,17 +551,12 @@ void way4(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (n
 							Str5=floattoString(c);
 							Str6=op1[k];
 							Str7=floattoString(d);
-							result.insert("(" + Str1 + Str2 +"("+ Str3  +Str4  + Str5 + ")" +  Str6 + Str7 + "))");
-							
-						}
-                            
+							result.insert("(" + Str1 + Str2 +"("+ Str3  +Str4  + Str5 + ")" +  Str6 + Str7 + "))");						
+						}                           
                     }
-                }
-				
-            }
-			
+                }				
+            }		
         }
-
     }
 
 void way5(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (num2 op2 (num3 op3 num4))
@@ -580,14 +572,10 @@ void way5(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (n
 			swapFloat(i,&a,&b,&c,&d,p,q,r,s);
             for (int i=0;i<4;i++) {
                 for (int j=0;j<4;j++) {
-                    for (int k=0;k<4;k++) {
-                        
-                        // Way2 -->(nums[0] opI (nums[1] opJ (num[2]) opK nums[3]))
-                        
+                    for (int k=0;k<4;k++) {                        
                         temp1 = calculate(op1[k],c,d);
                         temp2 = calculate(op1[j],b,temp1);
                         temp3 = calculate(op1[i],a,temp2);
-                        //cout<<"way1 --"<<ops[i]<<" "<<ops[j]<<" "<<ops[k]<<" "<<temp1<<" "<<temp2<<" "<<temp3<<"\n";
                         if (24-temp3 <= 0.000001 && 24-temp3 >= -0.000001){
 							Str1=floattoString(a);
 							Str2=op1[i];
@@ -596,17 +584,12 @@ void way5(float a,float b,float c,float d,char op1[4]) {//Menghitung num1 op1 (n
 							Str5=floattoString(c);
 							Str6=op1[k];
 							Str7=floattoString(d);
-							result.insert("(" + Str1 + Str2 +"("+ Str3  +Str4  + "(" + Str5  +  Str6 + Str7 + "))");
-							
-						}
-                            
+							result.insert("(" + Str1 + Str2 +"("+ Str3  +Str4  + "(" + Str5  +  Str6 + Str7 + "))");							
+						}                           
                     }
-                }
-				
-            }
-			
+                }				
+            }			
         }
-
     }
 
 void splashScreen(){//splashscreen
@@ -748,9 +731,7 @@ int main()
 
 	cout << a1 << " " << b1 << " " << c1 << " " << d1 << endl;
 
-	for (auto j = result.begin(); j != result.end(); ++j){
-        count++;
-	}
+	count = result.size();
 	
 	if (count>0){
 		cout << count << " Solutions found\n";
@@ -787,7 +768,10 @@ int main()
 	}
 		
 	if (save.compare("Y") == 0){
-		ofstream File("output.txt");
+		string filename;
+		cout << "Input nama file : ";
+		cin >> filename;
+		ofstream File("C:\\Users\\ASUS\\Tucil1 STIMA\\24Solver-Tucil1-STIMA\\Tucil1Stima\\test\\"+ filename + ".txt");
 		File << a1 << " " << b1 << " " << c1 << " " << d1 << endl;
 		File << count << " Solutions\n";
 		for (auto j = result.begin(); j != result.end(); ++j){
